@@ -1,12 +1,11 @@
 <?php
-/**
- * @file src/Korowai/Lib/Error/AbstractErrorHandler.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
@@ -28,7 +27,7 @@ abstract class AbstractErrorHandler implements ErrorHandlerInterface
     /**
      * Initializes the object
      *
-     * @param int $errorTypes
+     * @param  int $errorTypes
      *        Can be used to mask the triggering of the error handler.
      */
     public function __construct(int $errorTypes = E_ALL | E_STRICT)

@@ -1,19 +1,18 @@
 <?php
-/**
- * @file Tests/ExceptionErrorHandlerTest.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
 
-namespace Korowai\Lib\Error\Tests;
+namespace Korowai\Tests\Lib\Error;
 
-use PHPUnit\Framework\TestCase;
+use Korowai\Testing\TestCase;
 
 use Korowai\Lib\Error\ExceptionErrorHandler;
 use Korowai\Lib\Error\AbstractManagedErrorHandler;
@@ -36,13 +35,13 @@ class ExceptionErrorHandlerTest extends TestCase
 
     public function test__extends__AbstractManagedErrorHandler()
     {
-        $parents = class_parents(ExceptionErrorHandler::class);
-        $this->assertContains(AbstractManagedErrorHandler::class, $parents);
+        $this->assertExtendsClass(AbstractManagedErrorHandler::class, ExceptionErrorHandler::class);
     }
 
     public function test__makeExceptionGenerator__withCallable()
     {
-        $func = function() {};
+        $func = function () {
+        };
         $this->assertSame($func, ExceptionErrorHandler::makeExceptionGenerator($func));
     }
 
@@ -77,7 +76,7 @@ class ExceptionErrorHandlerTest extends TestCase
     public function test__makeExceptionGenerator__withWrongArgType()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageRegExp(
+        $this->expectExceptionMessageMatches(
             '/argument 1 to ' . preg_quote(ExceptionErrorHandler::class) .
             '::makeExceptionGenerator\\(\\) must be a callable, a class name' .
             ' or null, int(eger)? given/'
@@ -89,7 +88,7 @@ class ExceptionErrorHandlerTest extends TestCase
     public function test__makeExceptionGenerator__withNonClassString()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageRegExp(
+        $this->expectExceptionMessageMatches(
             '/argument 1 to ' . preg_quote(ExceptionErrorHandler::class) .
             '::makeExceptionGenerator\\(\\) must be a callable, a class name' .
             ' or null, string given/'
@@ -100,19 +99,21 @@ class ExceptionErrorHandlerTest extends TestCase
 
     public function test__construct__withoutErrorTypes()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $handler = new ExceptionErrorHandler($func);
         $this->assertSame($func, $handler->getExceptionGenerator());
-        $this->assertEquals(E_ALL | E_STRICT,  $handler->getErrorTypes());
+        $this->assertEquals(E_ALL | E_STRICT, $handler->getErrorTypes());
     }
 
     public function test__construct__withErrorTypes()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $handler = new ExceptionErrorHandler($func, 123);
 
         $this->assertSame($func, $handler->getExceptionGenerator());
-        $this->assertEquals(123,  $handler->getErrorTypes());
+        $this->assertEquals(123, $handler->getErrorTypes());
     }
 
     public function test__invoke__whenSeverityIsRelevant()

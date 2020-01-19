@@ -1,12 +1,11 @@
 <?php
-/**
- * @file src/Korowai/Lib/Error/ContextManagerMethods.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
@@ -36,7 +35,7 @@ trait ContextManagerMethods
      *
      * @return bool Always ``false``.
      */
-    public function exitContext(?\Throwable $exception = null) : bool
+    public function exitContext(\Throwable $exception = null) : bool
     {
         restore_error_handler();
         return false;

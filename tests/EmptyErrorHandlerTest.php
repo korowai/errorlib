@@ -1,19 +1,18 @@
 <?php
-/**
- * @file Tests/EmptyErrorHandlerTest.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
 
-namespace Korowai\Lib\Error\Tests;
+namespace Korowai\Tests\Lib\Error;
 
-use PHPUnit\Framework\TestCase;
+use Korowai\Testing\TestCase;
 
 use Korowai\Lib\Error\EmptyErrorHandler;
 use Korowai\Lib\Error\ErrorHandlerInterface;
@@ -24,7 +23,7 @@ use Korowai\Lib\Context\ContextManagerInterface;
  */
 class EmptyErrorHandlerTest extends TestCase
 {
-    use \Korowai\Lib\Basic\Tests\SingletonTestMethods;
+    use \Korowai\Tests\Lib\Basic\SingletonTestMethods;
 
     protected function getClassUnderTest()
     {
@@ -33,14 +32,12 @@ class EmptyErrorHandlerTest extends TestCase
 
     public function test__implements__ErrorHandlerInterface()
     {
-        $interfaces = class_implements(EmptyErrorHandler::class);
-        $this->assertContains(ErrorHandlerInterface::class, $interfaces);
+        $this->assertImplementsInterface(ErrorHandlerInterface::class, EmptyErrorHandler::class);
     }
 
     public function test__implements__ContextManagerInterface()
     {
-        $interfaces = class_implements(EmptyErrorHandler::class);
-        $this->assertContains(ContextManagerInterface::class, $interfaces);
+        $this->assertImplementsInterface(ContextManagerInterface::class, EmptyErrorHandler::class);
     }
 
     public function test__getErrorTypes()

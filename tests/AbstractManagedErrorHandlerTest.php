@@ -1,19 +1,18 @@
 <?php
-/**
- * @file Tests/AbstractManagedErrorHandlerTest.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
 
-namespace Korowai\Lib\Error\Tests;
+namespace Korowai\Tests\Lib\Error;
 
-use PHPUnit\Framework\TestCase;
+use Korowai\Testing\TestCase;
 
 use Korowai\Lib\Error\AbstractManagedErrorHandler;
 use Korowai\Lib\Error\ErrorHandlerInterface;
@@ -28,21 +27,19 @@ class AbstractManagedErrorHandlerTest extends TestCase
 
     public function test__implements__ErrorHandlerInterface()
     {
-        $interfaces = class_implements(AbstractManagedErrorHandler::class);
-        $this->assertContains(ErrorHandlerInterface::class, $interfaces);
+        $this->assertImplementsInterface(ErrorHandlerInterface::class, AbstractManagedErrorHandler::class);
     }
 
     public function test__implements__ContextManagerInterface()
     {
-        $interfaces = class_implements(AbstractManagedErrorHandler::class);
-        $this->assertContains(ContextManagerInterface::class, $interfaces);
+        $this->assertImplementsInterface(ContextManagerInterface::class, AbstractManagedErrorHandler::class);
     }
 
     public function test__construct__withoutArguments()
     {
         $handler = $this->getMockBuilder(AbstractManagedErrorHandler::class)
                         ->getMockForAbstractClass();
-        $this->assertEquals(E_ALL | E_STRICT,  $handler->getErrorTypes());
+        $this->assertEquals(E_ALL | E_STRICT, $handler->getErrorTypes());
     }
 
     public function test__construct__withArgument()
@@ -50,7 +47,7 @@ class AbstractManagedErrorHandlerTest extends TestCase
         $handler = $this->getMockBuilder(AbstractManagedErrorHandler::class)
                         ->setConstructorArgs([123])
                         ->getMockForAbstractClass();
-        $this->assertEquals(123,  $handler->getErrorTypes());
+        $this->assertEquals(123, $handler->getErrorTypes());
     }
 
     /**

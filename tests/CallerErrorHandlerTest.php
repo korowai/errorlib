@@ -1,19 +1,18 @@
 <?php
-/**
- * @file Tests/CallerErrorHandlerTest.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
 
-namespace Korowai\Lib\Error\Tests;
+namespace Korowai\Tests\Lib\Error;
 
-use PHPUnit\Framework\TestCase;
+use Korowai\Testing\TestCase;
 
 use Korowai\Lib\Error\CallerErrorHandler;
 use Korowai\Lib\Error\ErrorHandler;
@@ -67,74 +66,79 @@ class CallerErrorHandlerTest extends TestCase
 
     public function test__extends__CustomErrorHandler()
     {
-        $parents = class_parents(CallerErrorHandler::class);
-        $this->assertContains(ErrorHandler::class, $parents);
+        $this->assertExtendsClass(ErrorHandler::class, CallerErrorHandler::class);
     }
 
     public function test__construct__withoutDistance()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = $this->createHandler($func);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(E_ALL | E_STRICT,  $handler->getErrorTypes());
+        $this->assertEquals(E_ALL | E_STRICT, $handler->getErrorTypes());
     }
 
     public function test__construct__withoutErrorTypes()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = new CallerErrorHandler($func, 0);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(E_ALL | E_STRICT,  $handler->getErrorTypes());
+        $this->assertEquals(E_ALL | E_STRICT, $handler->getErrorTypes());
     }
 
     public function test__construct__withDistance__1()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = $this->createHandler($func, 1);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(E_ALL | E_STRICT,  $handler->getErrorTypes());
+        $this->assertEquals(E_ALL | E_STRICT, $handler->getErrorTypes());
     }
 
     public function test__construct__withErrorTypes()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = new CallerErrorHandler($func, 0, 456);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(456,  $handler->getErrorTypes());
+        $this->assertEquals(456, $handler->getErrorTypes());
     }
 
     public function test__construct__fromOneLevelRecursion()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = $this->createRecursive(1, $func, 1, 456);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(456,  $handler->getErrorTypes());
+        $this->assertEquals(456, $handler->getErrorTypes());
     }
 
     public function test__construct__fromTwoLevelsRecursion()
     {
-        $func = function () {};
+        $func = function () {
+        };
         $caller_line = __line__ + 1;
         $handler = $this->createRecursive(2, $func, 2, 456);
         $this->assertSame($func, $handler->getErrorHandler());
         $this->assertEquals($caller_line, $handler->getCallerLine());
         $this->assertEquals(__file__, $handler->getCallerFile());
-        $this->assertEquals(456,  $handler->getErrorTypes());
+        $this->assertEquals(456, $handler->getErrorTypes());
     }
 
     public function test__invoke__direct()

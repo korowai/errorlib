@@ -1,12 +1,11 @@
 <?php
-/**
- * @file src/Korowai/Lib/Error/CallerExceptionErrorHandler.php
+
+/*
+ * This file is part of Korowai framework.
  *
- * This file is part of the Korowai package
+ * (c) Paweł Tomulik <ptomulik@meil.pw.edu.pl>
  *
- * @author Paweł Tomulik <ptomulik@meil.pw.edu.pl>
- * @package korowai\errorlib
- * @license Distributed under MIT license.
+ * Distributed under MIT license.
  */
 
 declare(strict_types=1);
@@ -23,9 +22,9 @@ class CallerExceptionErrorHandler extends ExceptionErrorHandler
     /**
      * Initializes the object.
      *
-     * @param callable $exceptionGenerator
-     * @param int $distance
-     * @param int $errorTypes
+     * @param  callable $exceptionGenerator
+     * @param  int $distance
+     * @param  int $errorTypes
      */
     public function __construct(callable $exceptionGenerator, int $distance = 1, int $errorTypes = E_ALL | E_STRICT)
     {
